@@ -1,0 +1,15 @@
+// {
+//   "compilerOptions": {
+//     "paths": {
+//       "@api/*": ["./api/*"],
+//       "@components/*": ["./components/*"],
+//       "@screens/*": ["./screens/*"],
+//       "@controllers/*": ["./controllers/*"],
+//       "@constants/*": ["./constants/*"],
+//       "@layouts/*": ["./layouts/*"],
+//       "@services/*": ["./services/*"],
+//       "@utils/*": ["./utils/*"],
+//       "@view/*": ["./view/*"]
+//     }
+//   }
+// }

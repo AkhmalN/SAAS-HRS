@@ -47,8 +47,22 @@ export const useRecognitionService = () => {
     };
   }, []);
 
-  const handleFaceDetected = ({ faces }) => {
-    if (isDetecting) {
+  const handleFaceDetected = async ({ faces }) => {
+    if (isDetecting && cameraRef && cameraRef.current) {
+      // Pastikan cameraRef telah terinisialisasi
+      if (faces.length > 0) {
+        try {
+          const photo = await cameraRef.current.takePictureAsync({
+            base64: true,
+          }); // Gunakan cameraRef.current
+          console.log(photo);
+          // const blob = await convertToBlob(photo.uri); // Konversi URI ke blob
+          // // console.log(blob); // Blob hasil konversi
+          // sendBlobToWebSocket(blob); // Kirim blob ke WebSocket
+        } catch (error) {
+          console.error("Error capturing photo:", error);
+        }
+      }
       if (faces.length > 0) {
         const interval = setInterval(() => {
           setProgress((prevProgress) => {
@@ -65,6 +79,7 @@ export const useRecognitionService = () => {
       }
     }
   };
+
   useEffect(() => {
     if (progress === 100) {
       // navigation.navigate("Main");
@@ -79,23 +94,23 @@ export const useRecognitionService = () => {
     navigation.navigate("Main");
   };
 
-  // const renderFaceBox = () => {
-  //   return detectedFaces.map((face, index) => (
-  //     <View
-  //       key={index}
-  //       style={{
-  //         position: "absolute",
-  //         borderWidth: isDetecting ? 3 : 0, // Menyesuaikan lebar border berdasarkan kondisi isDetecting
-  //         borderColor: "red",
-  //         borderRadius: 5,
-  //         left: face.bounds.origin.x,
-  //         top: face.bounds.origin.y,
-  //         width: face.bounds.size.width,
-  //         height: face.bounds.size.height,
-  //       }}
-  //     />
-  //   ));
-  // };
+  const renderFaceBox = () => {
+    return detectedFaces.map((face, index) => (
+      <View
+        key={index}
+        style={{
+          position: "absolute",
+          borderWidth: isDetecting ? 3 : 0, // Menyesuaikan lebar border berdasarkan kondisi isDetecting
+          borderColor: "red",
+          borderRadius: 5,
+          left: face.bounds.origin.x,
+          top: face.bounds.origin.y,
+          width: face.bounds.size.width,
+          height: face.bounds.size.height,
+        }}
+      />
+    ));
+  };
   if (hasPermission == null) {
     return <View />;
   }
@@ -112,7 +127,7 @@ export const useRecognitionService = () => {
     cameraRef,
     detectedFaces,
     messageDetected,
-    // renderFaceBox,
+    renderFaceBox,
     progress,
     handleFaceDetected,
     cancelFaceDetection,

@@ -7,11 +7,11 @@ import { useToken } from "../context/authContext";
 import { CreateIzinCuti, updateIzinCuti } from "../api/izinCuti";
 import { DateFormat, FormFormat } from "../utils/DateFormat";
 import { theme } from "../constant/color";
-import ModalComponent from "../components/Modal";
+import ModalComponent from "../components/Modal/Success";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { getPegawai } from "../api/pegawai";
 import { useId } from "../context/userContext";
-import ModalLoading from "../components/ModalLoading";
+import ModalLoading from "../components/Modal/ModalLoading";
 
 const Cuti = () => {
   const { token } = useToken();
@@ -33,7 +33,7 @@ const Cuti = () => {
   );
   const [tglAwalCuti, setTglAwalCuti] = useState("");
   const [tglAkhirCuti, setTglAkhirCuti] = useState("");
-  const [statusCuti, setStatusCuti] = useState("Diterima");
+  const [statusCuti, setStatusCuti] = useState("Ditinjau");
   const [idPegawai, setIdPegawai] = useState(11);
   const [keterangan, setKeterangan] = useState("");
 
@@ -103,13 +103,7 @@ const Cuti = () => {
   return (
     <View style={styles.container}>
       <View style={styles.dateTimeContainer}>
-        {isLoading && (
-          <View>
-            <Text>
-              Loading <ActivityIndicator />
-            </Text>
-          </View>
-        )}
+        {isLoading && <ModalLoading />}
         <View style={styles.dateOnStart}>
           <Text style={styles.textOnDate}>Tanggal Awal Cuti : </Text>
           <TextInput
@@ -194,6 +188,8 @@ const Cuti = () => {
         <ModalComponent
           visible={modalVisible}
           onRequestClose={() => setModalVisible(false)}
+          message={"Pengajuan Cuti Berhasil Dibuat"}
+          label={"Berhasil"}
         />
       )}
     </View>

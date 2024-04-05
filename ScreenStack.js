@@ -4,12 +4,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import BarStack from "./BarStack";
 import Login from "./screens/auth/Login";
 import Cuti from "./screens/Cuti";
-import add_izin_hari from "./controllers/add_izin_hari";
-import Izin from "./screens/Izin";
-import add_izin_jam from "./controllers/add_izin_jam";
 import recognition from "./screens/recognition";
 import Camera from "./services/camera";
-
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import PersonalScreen from "./screens/PersonalScreen";
 import SettingScreen from "./screens/SettingsScreen";
@@ -18,7 +14,12 @@ import RoomChat from "./screens/RoomChat";
 import StatusPengajuan from "./screens/StatusPengajuan";
 import EditCuti from "./screens/EditCuti";
 import { theme } from "./constant/color";
-import { AntDesign, FontAwesome5 } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
+import RiwayatKehadiran from "./screens/RiwayatKehadiran";
+import Kasbon from "./screens/Kasbon";
+import StatusKasbon from "./screens/StatusKasbon";
+import EditKasbon from "./screens/EditKasbon";
+import TestRecognition from "./screens/TestRecognition";
 const Stack = createStackNavigator();
 const queryClient = new QueryClient();
 
@@ -81,7 +82,7 @@ const MainNavigator = () => {
               ),
             }}
           />
-          <Stack.Screen name="Izin" component={Izin} />
+
           <Stack.Screen
             name="Status Pengajuan"
             component={StatusPengajuan}
@@ -103,22 +104,95 @@ const MainNavigator = () => {
             }}
           />
           <Stack.Screen
-            name="Izin Hari"
-            component={add_izin_hari}
+            name="Riwayat Kehadiran"
+            component={RiwayatKehadiran}
             options={{
-              headerTitle: "Izin hari",
+              headerTitle: "Riwayat Kehadiran",
+              headerTitleStyle: {
+                color: theme.textColor,
+              },
+              headerStyle: {
+                backgroundColor: theme.primary, // Ubah sesuai warna yang diinginkan
+              },
+              headerBackImage: () => (
+                <FontAwesome5
+                  name="chevron-circle-left"
+                  size={24}
+                  color={theme.textColor}
+                />
+              ),
             }}
           />
           <Stack.Screen
-            name="Izin Jam"
-            component={add_izin_jam}
+            name="Kasbon"
+            component={Kasbon}
             options={{
-              headerTitle: "Izin jam",
+              headerTitle: "Kasbon",
+              headerTitleStyle: {
+                color: theme.textColor,
+              },
+              headerStyle: {
+                backgroundColor: theme.primary, // Ubah sesuai warna yang diinginkan
+              },
+              headerBackImage: () => (
+                <FontAwesome5
+                  name="chevron-circle-left"
+                  size={24}
+                  color={theme.textColor}
+                />
+              ),
+            }}
+          />
+          <Stack.Screen
+            name="Status Kasbon"
+            component={StatusKasbon}
+            options={{
+              headerTitle: "Status Kasbon",
+              headerTitleStyle: {
+                color: theme.textColor,
+              },
+              headerStyle: {
+                backgroundColor: theme.primary, // Ubah sesuai warna yang diinginkan
+              },
+              headerBackImage: () => (
+                <FontAwesome5
+                  name="chevron-circle-left"
+                  size={24}
+                  color={theme.textColor}
+                />
+              ),
+            }}
+          />
+          <Stack.Screen
+            name="Edit Kasbon"
+            component={EditKasbon}
+            options={{
+              headerTitle: "Edit Kasbon",
+              headerTitleStyle: {
+                color: theme.textColor,
+              },
+              headerStyle: {
+                backgroundColor: theme.primary, // Ubah sesuai warna yang diinginkan
+              },
+              headerBackImage: () => (
+                <FontAwesome5
+                  name="chevron-circle-left"
+                  size={24}
+                  color={theme.textColor}
+                />
+              ),
             }}
           />
           <Stack.Screen
             name="Recognition"
             component={recognition}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="Test Recognition"
+            component={TestRecognition}
             options={{
               headerShown: false,
             }}
@@ -169,13 +243,39 @@ const MainNavigator = () => {
             component={ChatScreen}
             options={{
               headerTitle: "Messages",
+              headerTitleStyle: {
+                color: theme.textColor,
+              },
+              headerStyle: {
+                backgroundColor: theme.primary, // Ubah sesuai warna yang diinginkan
+              },
+              headerBackImage: () => (
+                <FontAwesome5
+                  name="chevron-circle-left"
+                  size={24}
+                  color={theme.textColor}
+                />
+              ),
             }}
           />
           <Stack.Screen
             name="Room Chat"
             component={RoomChat}
             options={{
-              headerTitle: "Messages",
+              headerTitle: "Bob",
+              headerTitleStyle: {
+                color: theme.textColor,
+              },
+              headerStyle: {
+                backgroundColor: theme.primary, // Ubah sesuai warna yang diinginkan
+              },
+              headerBackImage: () => (
+                <FontAwesome5
+                  name="chevron-circle-left"
+                  size={24}
+                  color={theme.textColor}
+                />
+              ),
             }}
           />
         </Stack.Navigator>

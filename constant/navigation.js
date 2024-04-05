@@ -43,19 +43,6 @@ export const navigationItems = [
     ),
     onScreen: "Cuti",
   },
-
-  // {
-  //   label: "Izin",
-  //   icon: (
-  //     <Ionicons
-  //       name="hand-left-outline"
-  //       size={40}
-  //       color={"#4FA095"}
-  //       style={{ color: theme.primary }}
-  //     />
-  //   ),
-  //   onScreen: "Izin",
-  // },
   {
     label: "Status Pengajuan",
     icon: (
@@ -79,5 +66,41 @@ export const navigationItems = [
       />
     ),
     onScreen: "Karyawan",
+  },
+  {
+    label: "Riwayat Kehadiran",
+    icon: (
+      <MaterialCommunityIcons
+        name="face-recognition"
+        size={40}
+        color={"#4FA095"}
+        style={{ color: theme.primary }}
+      />
+    ),
+    onScreen: "Riwayat Kehadiran",
+  },
+  {
+    label: "Kasbon",
+    icon: (
+      <MaterialCommunityIcons
+        name="hand-coin-outline"
+        size={40}
+        color={"#4FA095"}
+        style={{ color: theme.primary }}
+      />
+    ),
+    onScreen: "Kasbon",
+  },
+  {
+    label: "Status Kasbon",
+    icon: (
+      <FontAwesome5
+        name="coins"
+        size={40}
+        color={"#4FA095"}
+        style={{ color: theme.primary }}
+      />
+    ),
+    onScreen: "Status Kasbon",
   },
 ];

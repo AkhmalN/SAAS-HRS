@@ -14,7 +14,7 @@ import { theme } from "../constant/color";
 import { getPegawai } from "../api/pegawai";
 import { useQuery } from "@tanstack/react-query";
 import { useId } from "../context/userContext";
-import ModalLoading from "../components/ModalLoading";
+import ModalLoading from "../components/Modal/ModalLoading";
 
 const PersonalScreen = () => {
   const { id } = useId();

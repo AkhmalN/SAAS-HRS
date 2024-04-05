@@ -7,10 +7,10 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
-import { theme } from "../constant/color";
+import { theme } from "../../constant/color";
 import { Button } from "react-native-paper";
 
-const ModalComponent = ({ visible, onRequestClose }) => {
+const ModalComponent = ({ visible, onRequestClose, message, label }) => {
   return (
     <Modal
       animationType="fade"
@@ -21,13 +21,11 @@ const ModalComponent = ({ visible, onRequestClose }) => {
       <View style={styles.overlay}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>Berhasil</Text>
-            <Text style={styles.modalSubText}>
-              Pengajuan cuti sedang ditinjau
-            </Text>
+            <Text style={styles.modalText}>{label}</Text>
+            <Text style={styles.modalSubText}>{message}</Text>
             <Image
               style={styles.modalImgPreview}
-              source={require("../assets/Modal_preview.png")}
+              source={require("../../assets/Modal_preview.png")}
             />
             <TouchableOpacity style={styles.button} onPress={onRequestClose}>
               <View style={{ flexDirection: "row" }}>
@@ -71,7 +69,6 @@ const styles = StyleSheet.create({
   },
   modalText: {
     padding: 10,
-    marginBottom: 15,
     textAlign: "center",
     color: theme.success,
     fontSize: 25,
@@ -82,6 +79,8 @@ const styles = StyleSheet.create({
   modalSubText: {
     color: theme.secondaryTextColor,
     fontWeight: "400",
+    fontSize: 18,
+    marginVertical: 10,
   },
   modalImgPreview: {
     width: "50%",

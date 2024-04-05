@@ -1,29 +1,12 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { Camera } from "expo-camera";
 import { socketIp } from "../api/apiConfig";
-import { useId } from "../context/userContext";
-import { useNavigation } from "@react-navigation/native";
 
-const Recognition = () => {
-  const navigation = useNavigation();
-  const { setId } = useId();
+const TestRecognition = () => {
   const [hasPermission, setHasPermission] = useState(null);
   const [cameraRef, setCameraRef] = useState(null);
-  const [progress, setProgress] = useState(0);
 
-  useEffect(() => {
-    (async () => {
-      const { status } = await Camera.requestCameraPermissionsAsync();
-      setHasPermission(status === "granted");
-    })();
-  }, []);
-
-  useEffect(() => {
-    if (hasPermission) {
-      handleCapture(); // Panggil handleCapture saat izin kamera diperoleh
-    }
-  }, [hasPermission]);
   const handleCapture = async () => {
     if (cameraRef) {
       try {
@@ -60,7 +43,6 @@ const Recognition = () => {
         // Kirim blob ke WebSocket server
         socket.send(blob);
         console.log("Blob sent to WebSocket server.");
-        setId(1);
       });
 
       // Tangani error
@@ -70,7 +52,6 @@ const Recognition = () => {
 
       // Tangani penutupan koneksi WebSocket
       socket.addEventListener("close", () => {
-        navigation.navigate("Main");
         console.log("WebSocket connection closed.");
       });
     } catch (error) {
@@ -85,6 +66,9 @@ const Recognition = () => {
         type={Camera.Constants.Type.front}
         ref={(ref) => setCameraRef(ref)}
       />
+      <TouchableOpacity style={styles.captureButton} onPress={handleCapture}>
+        <Text style={styles.captureButtonText}>Capture</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -92,12 +76,13 @@ const Recognition = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-
+    justifyContent: "center",
+    alignItems: "center",
     backgroundColor: "#fff",
   },
   camera: {
     width: "100%",
-    height: "100%",
+    height: "80%",
   },
   captureButton: {
     backgroundColor: "#007AFF",
@@ -111,4 +96,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Recognition;
+export default TestRecognition;

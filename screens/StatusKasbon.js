@@ -7,50 +7,37 @@ import {
   Image,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import { getIzinCuti } from "../api/izinCuti";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { Ionicons } from "@expo/vector-icons";
-import { useToken } from "../context/authContext";
 import { DateFormat } from "../utils/DateFormat";
 import { theme } from "../constant/color";
-import ModalDelete from "../components/Modal/DeleteCuti";
 import { ActivityIndicator } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
-
-const StatusPengajuan = () => {
+import { getDeduction } from "../api/deduction";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { EvilIcons } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
+import ModalDelete from "../components/Modal/DeleteKasbon";
+const StatusKasbon = () => {
   const navigation = useNavigation();
-  const { token } = useToken();
   const [modalVisible, setModalVisible] = useState(false);
   const [isdelete, setIsDelete] = useState([]);
   const [isEdit, setIsEdit] = useState(false);
 
-  const { isLoading, isError, data, error } = useQuery({
-    queryKey: ["data"],
-    queryFn: getIzinCuti,
+  const { isLoading, isError, data } = useQuery({
+    queryKey: ["kasbon"],
+    queryFn: getDeduction,
   });
 
   const handleEdit = (data) => {
     // updateIzinMutation.mutate(id, data, token);
-    navigation.navigate("Edit Cuti", { editedData: data });
+    navigation.navigate("Edit Kasbon", { editedData: data });
   };
 
   const handleDelete = (data) => {
     setIsDelete(data);
     setModalVisible(true);
     setIsEdit(true);
-  };
-
-  const getStatusTextColor = (status) => {
-    switch (status) {
-      case "Ditinjau":
-        return theme.warning;
-      case "Diterima":
-        return theme.success;
-      case "Ditolak":
-        return theme.danger;
-      default:
-        return "#000000";
-    }
   };
 
   return (
@@ -84,38 +71,25 @@ const StatusPengajuan = () => {
                     <Text
                       style={[styles.text, { fontSize: 18 }, styles.fontBold]}
                     >
-                      {DateFormat(data.tgl_permohonan)}
+                      {DateFormat(data.tgl_potongan)}
                     </Text>
-                  </View>
-                  <View
-                    style={[
-                      styles.labelContainer,
-                      styles.labelContainerStatus,
-                      { backgroundColor: getStatusTextColor(data.status_cuti) },
-                    ]}
-                  >
-                    <Text style={[styles.textStatus]}>{data.status_cuti}</Text>
                   </View>
                 </View>
                 <View style={styles.row}>
-                  <Ionicons
-                    name="arrow-forward-circle-outline"
+                  <EvilIcons name="cart" size={28} color={theme.primary} />
+                  <Text style={styles.text}>{data.nama_potongan}</Text>
+                </View>
+                <View style={styles.row}>
+                  <FontAwesome5 name="coins" size={28} color={theme.primary} />
+                  <Text style={styles.text}>Rp. {data.nilai_potongan}</Text>
+                </View>
+                <View style={styles.row}>
+                  <MaterialCommunityIcons
+                    name="clipboard-check-multiple-outline"
                     size={28}
                     color={theme.primary}
                   />
-                  <Text style={styles.text}>
-                    {DateFormat(data.tgl_awal_cuti)}
-                  </Text>
-                </View>
-                <View style={styles.row}>
-                  <Ionicons
-                    name="arrow-back-circle-outline"
-                    size={28}
-                    color={theme.danger}
-                  />
-                  <Text style={styles.text}>
-                    {DateFormat(data.tgl_akhir_cuti)}
-                  </Text>
+                  <Text style={styles.text}>{data.keterangan}</Text>
                 </View>
 
                 <View style={styles.row}>
@@ -172,10 +146,11 @@ const styles = StyleSheet.create({
     color: theme.primary,
   },
   card: {
+    width: "90%",
     backgroundColor: "#ecf0f6",
     borderRadius: 20,
     padding: 15,
-    marginBottom: 20,
+    marginVertical: 20,
     elevation: 3,
     shadowColor: "#000",
     shadowOpacity: 0.3,
@@ -187,7 +162,7 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: "row",
-    marginBottom: 5,
+    marginBottom: 15,
     alignItems: "center",
   },
   rowFlexEnd: {
@@ -208,12 +183,13 @@ const styles = StyleSheet.create({
   },
   label: {
     fontWeight: "bold",
+    fontSize: 18,
   },
   fontBold: {
     fontWeight: "bold",
   },
   text: {
-    fontSize: 16,
+    fontSize: 18,
     marginHorizontal: 5,
   },
   textStatus: {
@@ -245,4 +221,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default StatusPengajuan;
+export default StatusKasbon;

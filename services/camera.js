@@ -5,7 +5,9 @@ import { shareAsync } from "expo-sharing";
 import * as MediaLibrary from "expo-media-library";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
-
+import { Feather } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
+import { theme } from "../constant/color";
 export default function AbsenCamera() {
   const navigation = useNavigation();
   const [hasCameraPermission, setHasCameraPermission] = useState();
@@ -46,20 +48,7 @@ export default function AbsenCamera() {
     setPhoto(newPhoto);
   };
   if (photo) {
-    let sharePic = () => {
-      shareAsync(photo.uri).then(() => {
-        setPhoto(undefined);
-      });
-    };
-
-    let savePhoto = () => {
-      MediaLibrary.saveToLibraryAsync(photo.uri).then(() => {
-        const absenType = absenRoute.params?.absenType;
-        console.log(absenType);
-
-        setPhoto(undefined);
-      });
-    };
+    console.log(photo.uri);
   }
   const toggleCameraType = () => {
     setCameraType(
@@ -71,22 +60,19 @@ export default function AbsenCamera() {
   return (
     <Camera style={styles.container} type={cameraType} ref={cameraRef}>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={takePic} style={styles.button}>
+        <TouchableOpacity onPress={takePic}>
           <Text style={styles.buttonText}>
-            <Ionicons name="radio-button-on-outline" size={60} />
+            <Feather name="x" size={45} color="#FFF" />{" "}
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={toggleCameraType} style={styles.button}>
+        <TouchableOpacity onPress={takePic} style={styles.button}>
           <Text style={styles.buttonText}>
-            {cameraType === Camera.Constants.Type.front ? (
-              <Ionicons name="reload-outline" size={50} />
-            ) : (
-              <Ionicons
-                name="reload-outline"
-                size={50}
-                style={{ transform: [{ rotate: "180deg" }] }}
-              />
-            )}
+            <Feather name="camera" size={47} color="#FFF" />
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={toggleCameraType}>
+          <Text style={styles.buttonText}>
+            <MaterialIcons name="flip-camera-ios" size={45} color="#FFF" />
           </Text>
         </TouchableOpacity>
       </View>
@@ -103,17 +89,20 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 20,
     flexDirection: "row",
-    justifyContent: "center",
+    justifyContent: "space-around",
     width: "100%",
     paddingHorizontal: 40,
+    alignItems: "center",
   },
   button: {
-    padding: 15,
-    borderRadius: 10,
+    borderRadius: 50,
     justifyContent: "center",
     alignItems: "center",
-    flex: 0.4, // Sesuaikan lebar tombol
     margin: 10,
+    borderWidth: 1,
+    borderColor: "#FFF",
+    padding: 10,
+    backgroundColor: theme.primary,
   },
   buttonText: {
     color: "white",

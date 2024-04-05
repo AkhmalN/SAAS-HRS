@@ -24,7 +24,7 @@ import CardNavigation from "../components/CardNavigation";
 import { getPegawai } from "../api/pegawai";
 import { theme } from "../constant/color";
 import { useId } from "../context/userContext";
-import ModalLoading from "../components/ModalLoading";
+import ModalLoading from "../components/Modal/ModalLoading";
 
 const Beranda = () => {
   const { id } = useId();

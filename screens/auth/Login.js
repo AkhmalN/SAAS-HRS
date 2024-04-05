@@ -5,8 +5,6 @@ import {
   Text,
   TextInput,
   View,
-  ActivityIndicator,
-  Image,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
@@ -15,6 +13,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Auth } from "../../api/auth";
 import { theme } from "../../constant/color";
 import { StatusBar } from "expo-status-bar";
+import ModalLoading from "../../components/Modal/ModalLoading";
 
 export default function Login() {
   const { setToken } = useToken();
@@ -30,12 +29,10 @@ export default function Login() {
   };
 
   const handleLogin = async () => {
-    // navigation.navigate("Recognition");
     try {
       setLoading(true);
       const response = await Auth(username, password);
       if (response.status === 200) {
-        console.log(response.data);
         setToken(response.data.access_token);
         setLoading(false);
         navigation.navigate("Recognition");
@@ -53,19 +50,8 @@ export default function Login() {
       behavior={Platform.OS === "ios" ? "padding" : null}
       style={styles.container}
     >
+      {loading && <ModalLoading />}
       <View style={styles.formBox}>
-        {/* <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "center",
-            marginBottom: 20,
-          }}
-        >
-          <Image
-            source={require("../../assets/ICON_LOGO.png")}
-            style={{ width: 300, height: 80 }}
-          />
-        </View> */}
         <Text style={styles.label}>Username</Text>
 
         <View style={styles.inputField}>
@@ -104,16 +90,7 @@ export default function Login() {
           />
         </View>
         <TouchableOpacity style={styles.button} onPress={handleLogin}>
-          {loading ? (
-            <View style={{ flexDirection: "row" }}>
-              <Text style={[styles.buttonText, { marginRight: 10 }]}>
-                Loading
-              </Text>
-              <ActivityIndicator size={"small"} color={"#FFF"} />
-            </View>
-          ) : (
-            <Text style={styles.buttonText}>Login</Text>
-          )}
+          <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.buttonForgot} onPress={handleLogin}>
           <Text style={styles.buttonTextForgot}>Lupa password ?</Text>

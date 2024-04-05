@@ -7,19 +7,19 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
-import { theme } from "../constant/color";
+import { theme } from "../../constant/color";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteIzinCuti } from "../api/izinCuti";
 import { ActivityIndicator } from "react-native-paper";
+import { deleteDeduction } from "../../api/deduction";
 
 const ModalDelete = ({ visible, onRequestClose, data }) => {
   const queryClient = useQueryClient();
 
-  const deleteIzinMutation = useMutation({
-    mutationFn: deleteIzinCuti,
+  const deleteDeductionMutation = useMutation({
+    mutationFn: deleteDeduction,
     onSuccess: async () => {
       console.log("delete success");
-      await queryClient.refetchQueries(["data"]);
+      await queryClient.refetchQueries(["kasbon"]);
       setTimeout(() => {
         onRequestClose();
       }, 1000);
@@ -33,7 +33,7 @@ const ModalDelete = ({ visible, onRequestClose, data }) => {
   });
 
   const handleOnDelete = () => {
-    deleteIzinMutation.mutate(data.id);
+    deleteDeductionMutation.mutate(data.id);
   };
 
   return (
@@ -46,11 +46,11 @@ const ModalDelete = ({ visible, onRequestClose, data }) => {
       <View style={styles.overlay}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>Hapus Pengajuan</Text>
+            <Text style={styles.modalText}>Hapus Kasbon</Text>
 
             <Image
               style={styles.modalImgPreview}
-              source={require("../assets/Modal_preview_delete.png")}
+              source={require("../../assets/Modal_preview_delete.png")}
             />
             <View style={styles.buttonContainer}>
               <TouchableOpacity
@@ -59,7 +59,7 @@ const ModalDelete = ({ visible, onRequestClose, data }) => {
               >
                 <View style={{ flexDirection: "row" }}>
                   <Text style={[styles.buttonText, { color: theme.textColor }]}>
-                    {deleteIzinMutation.isPending ? (
+                    {deleteDeductionMutation.isPending ? (
                       <ActivityIndicator color={theme.textColor} />
                     ) : (
                       "Hapus"

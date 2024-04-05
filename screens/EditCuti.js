@@ -7,7 +7,7 @@ import { useToken } from "../context/authContext";
 import { updateIzinCuti } from "../api/izinCuti";
 import { DateFormat, FormFormat } from "../utils/DateFormat";
 import { theme } from "../constant/color";
-import ModalComponent from "../components/Modal";
+import ModalComponent from "../components/Modal/Success";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRoute } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
